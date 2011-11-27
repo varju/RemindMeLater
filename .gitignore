@@ -5,3 +5,4 @@ _
 obj
 .debmake
 .theos
+*.tmproj
