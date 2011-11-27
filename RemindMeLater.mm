@@ -19,10 +19,6 @@ static Class $SBAlertItemsController = objc_getClass("SBAlertItemsController");
 static Class $SBAwayController = objc_getClass("SBAwayController");
 static Class $SBCalendarController = objc_getClass("SBCalendarController");
 
-#if DEBUG_FAKE_EVENT
-static int debugEventNum = 0;
-#endif
-
 static RMLController *controller;
 
 @interface SBCalendarAlertItem (hidden)
@@ -70,29 +66,6 @@ MSHook(void, rml_sbCalendarAlertConfigure, SBCalendarAlertItem *self, SEL sel, B
   [controller configureAlertItem:self];
 }
 
-#if DEBUG_FAKE_EVENT
-MSHook(void, rml_sbApplicationIconLaunch, SBApplicationIcon *self, SEL sel) {
-  NSLog(@"RemindMeLater.rml_sbApplicationIconLaunch: creating test alert");
-
-  NSString *title = [NSString stringWithFormat:@"Test Alert %d", debugEventNum++];
-  NSString *location = @"Right here";
-
-  Class cls = $SBCalendarAlertItem;
-  NSTimeInterval dateNow = [[NSDate date] timeIntervalSince1970];
-  SBAlertItem *item;
-  if ([controller isVersion4]) {
-    item = [[cls alloc] initWithDate:dateNow timeZone:nil title:title location:location eventId:1 isAllDay:true];
-  } else {
-    item = [[cls alloc] initWithDate:dateNow title:title location:location eventId:1 isAllDay:true];
-  }
-  SBAlertItemsController *ctrl = [$SBAlertItemsController sharedInstance];
-  [ctrl activateAlertItem:item];
-  [item release];
-
-  _rml_sbApplicationIconLaunch(self, sel);
-}
-#endif
-
 #if DEBUG_PREFS
 MSHook(void, rml_writePreference, id self, SEL sel, id preference) {
   NSLog(@"RemindMeLater.rml_writePreference: in with %@ (%@)", preference, NSStringFromClass([preference class]));
@@ -116,11 +89,6 @@ MSInitialize {
 
 #if DEBUG_LOG
   NSLog(@"RemindMeLater: initializing, enabled=%d", [controller isEnabled]);
-#endif
-
-#if DEBUG_FAKE_EVENT
-  Class $SBApplicationIcon = objc_getClass("SBApplicationIcon");
-  Hook(SBApplicationIcon, launch, rml_sbApplicationIconLaunch);
 #endif
 
   Hook(SBCalendarAlertItem, configure:requirePasscodeForActions:, rml_sbCalendarAlertConfigure);
