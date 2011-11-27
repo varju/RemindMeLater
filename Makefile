@@ -10,6 +10,7 @@ else
 TWEAK_NAME = RemindMeLater
 RemindMeLater_OBJC_FILES = RemindMeLater.mm RMLSnoozer.m RMLAlertView.m RMLController.m OBSlider.m
 RemindMeLater_FRAMEWORKS = UIKit AVFoundation AudioToolbox CoreGraphics
+RemindMeLater_LDFLAGS = -lsubstrate
 
 BUNDLE_NAME = RemindMeLaterSettings
 RemindMeLaterSettings_OBJC_FILES = RemindMeLaterSettings.m
