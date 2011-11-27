@@ -34,6 +34,7 @@
 
 @synthesize isVersion4 = _isVersion4;
 @synthesize isVersion43 = _isVersion43;
+@synthesize isVersion5 = _isVersion5;
 @synthesize isEnabled = _isEnabled;
 @synthesize snoozeTime = _snoozeTime;
 @synthesize keepNagging = _keepNagging;
@@ -80,6 +81,7 @@
 -(void)loadPreferences {
   _isVersion4 = (objc_getClass("UILocalNotification") != nil);
   _isVersion43 = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"4.3");
+  _isVersion5 = SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"5.0");
 
   // Default values
   _isEnabled = YES;
@@ -120,8 +122,8 @@
   }
 
 #if DEBUG_LOG
-  NSLog(@"RMLController.loadPreferences: out with enabled %d, snoozeTime %d, version4 %d, version43 %d, keepNagging %d, nagInterval %d",
-        _isEnabled, _snoozeTime, _isVersion4, _isVersion43, _keepNagging, _nagInterval);
+  NSLog(@"RMLController.loadPreferences: out with enabled %d, snoozeTime %d, version4 %d, version43 %d, version5 %d, keepNagging %d, nagInterval %d",
+        _isEnabled, _snoozeTime, _isVersion4, _isVersion43, _isVersion5, _keepNagging, _nagInterval);
 #endif
 }
 

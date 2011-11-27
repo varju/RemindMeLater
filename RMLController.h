@@ -20,6 +20,7 @@
 @interface RMLController : NSObject {
   BOOL _isVersion4;
   BOOL _isVersion43;
+  BOOL _isVersion5;
   BOOL _isEnabled;
   int _snoozeTime;
   BOOL _keepNagging;
@@ -31,6 +32,7 @@
 
 @property (assign, readonly) BOOL isVersion4;
 @property (assign, readonly) BOOL isVersion43;
+@property (assign, readonly) BOOL isVersion5;
 @property (assign, readonly) BOOL isEnabled;
 @property (assign, readonly) int snoozeTime;
 @property (assign, readonly) BOOL keepNagging;
