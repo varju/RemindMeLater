@@ -66,18 +66,6 @@ MSHook(void, rml_sbCalendarAlertConfigure, SBCalendarAlertItem *self, SEL sel, B
   [controller configureAlertItem:self];
 }
 
-#if DEBUG_PREFS
-MSHook(void, rml_writePreference, id self, SEL sel, id preference) {
-  NSLog(@"RemindMeLater.rml_writePreference: in with %@ (%@)", preference, NSStringFromClass([preference class]));
-  _rml_writePreference(self, sel, preference);
-}
-
-MSHook(void, rml_setTitleDictionary, id self, SEL sel, id dictionary) {
-  NSLog(@"RemindMeLater.rml_setTitleDictionary: in for %@", dictionary);
-  _rml_setTitleDictionary(self, sel, dictionary);
-}
-#endif
-
 #define Hook(cls, sel, imp)                                     \
   _ ## imp = MSHookMessage($ ## cls, @selector(sel), &$ ## imp)
 
@@ -92,14 +80,6 @@ MSInitialize {
 #endif
 
   Hook(SBCalendarAlertItem, configure:requirePasscodeForActions:, rml_sbCalendarAlertConfigure);
-
-#if DEBUG_PREFS
-  Class $PSRootController = objc_getMetaClass("PSRootController");
-  Hook(PSRootController, writePreference:, rml_writePreference);
-
-  Class $PSSpecifier = objc_getClass("PSSpecifier");
-  Hook(PSSpecifier, setTitleDictionary:, rml_setTitleDictionary);
-#endif
 
   [pool release];
 }
