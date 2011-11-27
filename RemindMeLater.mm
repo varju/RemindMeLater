@@ -1,0 +1,137 @@
+//  RemindMeLater.mm
+//  RemindMeLater
+//
+//  Created by Alex Varju on 2010-09-06
+//  Copyright Alex Varju 2010. All rights reserved.
+//
+
+#import <substrate.h>
+#import <SpringBoard/SpringBoard.h>
+#import <AudioToolbox/AudioToolbox.h>
+
+#import "RMLController.h"
+#import "RMLAlertView.h"
+#import "RMLSnoozer.h"
+#include "RMLDebug.h"
+
+static Class $SBCalendarAlertItem = objc_getClass("SBCalendarAlertItem");
+static Class $SBAlertItemsController = objc_getClass("SBAlertItemsController");
+static Class $SBAwayController = objc_getClass("SBAwayController");
+static Class $SBCalendarController = objc_getClass("SBCalendarController");
+
+#if DEBUG_FAKE_EVENT
+static int debugEventNum = 0;
+#endif
+
+static RMLController *controller;
+
+@interface SBCalendarAlertItem (hidden)
+-(id)initWithDate:(double)arg1 title:(id)arg2 location:(id)arg3 eventId:(int)arg4 isAllDay:(BOOL)arg5;
+-(id)initWithDate:(double)arg1 timeZone:(id)arg2 title:(id)arg3 location:(id)arg4 eventId:(int)arg5 isAllDay:(BOOL)arg6;
+@end
+
+
+@interface PhoneJailbreakImpl : NSObject <RMLJailbreakFacade>
+@end
+@implementation PhoneJailbreakImpl
+
+-(void)showAlert:(id)alert {
+  SBCalendarAlertItem *alertItem = (SBCalendarAlertItem *)alert;
+  SBAlertItemsController *ctrl = [$SBAlertItemsController sharedInstance];
+  [ctrl activateAlertItem:alertItem];
+  [controller playSound:YES];
+}
+
+-(BOOL)isAlertShowing:(id)alert {
+  SBAlertItemsController *ctrl = [$SBAlertItemsController sharedInstance];
+  id visibleItem = [ctrl visibleAlertItem];
+#if DEBUG_LOG
+  NSLog(@"PhoneJailbreakImpl.isAlertShowing: visibleItem is %@, alert is %@", visibleItem, alert);
+#endif
+  return visibleItem == alert;
+}
+
+-(void)wakeup {
+  SBAwayController *ctrl = [$SBAwayController sharedAwayController];
+  [ctrl undimScreen];
+  [ctrl restartDimTimer:20.0];
+}
+
+-(void)playSound:(BOOL)isRepeat {
+  SBCalendarController *ctrl = [$SBCalendarController sharedInstance];
+  [ctrl playAlertSound];
+}
+
+@end
+
+
+MSHook(void, rml_sbCalendarAlertConfigure, SBCalendarAlertItem *self, SEL sel, BOOL configure, BOOL passcode) {
+  _rml_sbCalendarAlertConfigure(self, sel, configure, passcode);
+  [controller configureAlertItem:self];
+}
+
+#if DEBUG_FAKE_EVENT
+MSHook(void, rml_sbApplicationIconLaunch, SBApplicationIcon *self, SEL sel) {
+  NSLog(@"RemindMeLater.rml_sbApplicationIconLaunch: creating test alert");
+
+  NSString *title = [NSString stringWithFormat:@"Test Alert %d", debugEventNum++];
+  NSString *location = @"Right here";
+
+  Class cls = $SBCalendarAlertItem;
+  NSTimeInterval dateNow = [[NSDate date] timeIntervalSince1970];
+  SBAlertItem *item;
+  if ([controller isVersion4]) {
+    item = [[cls alloc] initWithDate:dateNow timeZone:nil title:title location:location eventId:1 isAllDay:true];
+  } else {
+    item = [[cls alloc] initWithDate:dateNow title:title location:location eventId:1 isAllDay:true];
+  }
+  SBAlertItemsController *ctrl = [$SBAlertItemsController sharedInstance];
+  [ctrl activateAlertItem:item];
+  [item release];
+
+  _rml_sbApplicationIconLaunch(self, sel);
+}
+#endif
+
+#if DEBUG_PREFS
+MSHook(void, rml_writePreference, id self, SEL sel, id preference) {
+  NSLog(@"RemindMeLater.rml_writePreference: in with %@ (%@)", preference, NSStringFromClass([preference class]));
+  _rml_writePreference(self, sel, preference);
+}
+
+MSHook(void, rml_setTitleDictionary, id self, SEL sel, id dictionary) {
+  NSLog(@"RemindMeLater.rml_setTitleDictionary: in for %@", dictionary);
+  _rml_setTitleDictionary(self, sel, dictionary);
+}
+#endif
+
+#define Hook(cls, sel, imp)                                     \
+  _ ## imp = MSHookMessage($ ## cls, @selector(sel), &$ ## imp)
+
+MSInitialize {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+
+  PhoneJailbreakImpl *jailbreakFacade = [[[PhoneJailbreakImpl alloc] init] autorelease];
+  controller = [[RMLController alloc] initWithJailbreakFacade:jailbreakFacade];
+
+#if DEBUG_LOG
+  NSLog(@"RemindMeLater: initializing, enabled=%d", [controller isEnabled]);
+#endif
+
+#if DEBUG_FAKE_EVENT
+  Class $SBApplicationIcon = objc_getClass("SBApplicationIcon");
+  Hook(SBApplicationIcon, launch, rml_sbApplicationIconLaunch);
+#endif
+
+  Hook(SBCalendarAlertItem, configure:requirePasscodeForActions:, rml_sbCalendarAlertConfigure);
+
+#if DEBUG_PREFS
+  Class $PSRootController = objc_getMetaClass("PSRootController");
+  Hook(PSRootController, writePreference:, rml_writePreference);
+
+  Class $PSSpecifier = objc_getClass("PSSpecifier");
+  Hook(PSSpecifier, setTitleDictionary:, rml_setTitleDictionary);
+#endif
+
+  [pool release];
+}

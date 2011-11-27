@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>entry</key>
+	<dict>
+		<key>bundle</key>
+		<string>RemindMeLaterSettings</string>
+		<key>cell</key>
+		<string>PSLinkCell</string>
+		<key>isController</key>
+		<true/>
+		<key>icon</key>
+		<string>icon.png</string>
+		<key>label</key>
+		<string>RemindMeLater</string>
+		<key>id</key>
+		<string>ca.varju.RemindMeLater</string>
+	</dict>
+</dict>
+</plist>

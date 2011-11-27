@@ -1,0 +1,9 @@
+Package: ca.varju.remindmelater
+Name: RemindMeLater
+Depends: mobilesubstrate, preferenceloader, firmware (>= 3.1)
+Version: 1.2.3
+Architecture: iphoneos-arm
+Description: Adds a snooze button to all Calendar alerts.
+Maintainer: Alex Varju [alex@varju.ca]
+Author: varju
+Section: Tweaks

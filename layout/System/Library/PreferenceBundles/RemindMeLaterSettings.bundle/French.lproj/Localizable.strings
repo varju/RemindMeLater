@@ -1,0 +1,50 @@
+/* Main settings page */
+
+"SNOOZE_SETTINGS" = "Réglage du rappel";
+"DEFAULT_SNOOZE_TIME" = "Répétition par défaut";
+
+"AUTOMATIC_REPEAT" = "Répétition automatique";
+"REPEAT_ENABLED" = "Activé";
+"REPEAT_INTERVAL" = "Intervalle";
+"REPEAT_TIMES" = "Nombre de répétitions";
+
+"1_MIN" = "1 minute";
+"2_MIN" = "2 minutes";
+"3_MIN" = "3 minutes";
+"4_MIN" = "4 minutes";
+"5_MIN" = "5 minutes";
+"6_MIN" = "6 minutes";
+"7_MIN" = "7 minutes";
+"8_MIN" = "8 minutes";
+"9_MIN" = "9 minutes";
+"10_MIN" = "10 minutes";
+"11_MIN" = "11 minutes";
+"12_MIN" = "12 minutes";
+"13_MIN" = "13 minutes";
+"14_MIN" = "14 minutes";
+"15_MIN" = "15 minutes";
+"30_MIN" = "30 minutes";
+"60_MIN" = "60 minutes";
+
+"1_TIME" = "1 fois";
+"2_TIME" = "2 fois";
+"3_TIME" = "3 fois";
+"4_TIME" = "4 fois";
+"5_TIME" = "5 fois";
+
+"REPORT_ISSUE" = "Signaler un problème";
+"RMLHelp" = "FAQ";
+
+"COPYRIGHT" = "RemindMeLater \U00a9 2010-2011 Alex Varju. OBSlider \U00a9 2011 Ole Begemann.";
+
+/* Help settings page */
+
+"INLINE_HELP_1" = "1. Setting changes require a reboot/respring to take effect.";
+"INLINE_HELP_2" = "2. Snoozing only works while the phone is on; rebooting the phone will clear out any pending reminders.";
+
+/* Snooze popup */
+
+"CLOSE" = "Fermer";
+"VIEW_EVENT" = "Afficher";
+"SNOOZE" = "Répéter";
+"SNOOZE_TIME" = "%d Minutes";
