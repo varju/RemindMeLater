@@ -3,7 +3,7 @@
 
 #import "RMLController.h"
 #import "RMLFrameworkHeaders.h"
-#import "OBSlider.h"
+#import "obslider/OBSlider/OBSlider.h"
 
 #pragma mark Forward imports
 

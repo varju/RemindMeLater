@@ -1,3 +1,6 @@
 [submodule "framework"]
 	path = framework
 	url = git://github.com/rpetrich/theos.git
+[submodule "obslider"]
+	path = obslider
+	url = git://github.com/varju/OBSlider.git

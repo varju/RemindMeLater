@@ -8,7 +8,7 @@ all clean package install::
 else
 
 TWEAK_NAME = RemindMeLater
-RemindMeLater_OBJC_FILES = RemindMeLater.mm RMLSnoozer.m RMLAlertView.m RMLController.m OBSlider.m
+RemindMeLater_OBJC_FILES = RemindMeLater.mm RMLSnoozer.m RMLAlertView.m RMLController.m obslider/OBSlider/OBSlider.m
 RemindMeLater_FRAMEWORKS = UIKit AVFoundation AudioToolbox CoreGraphics
 RemindMeLater_LDFLAGS = -lsubstrate
 
