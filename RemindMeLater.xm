@@ -1,10 +1,3 @@
-//  RemindMeLater.mm
-//  RemindMeLater
-//
-//  Created by Alex Varju on 2010-09-06
-//  Copyright Alex Varju 2010. All rights reserved.
-//
-
 #import <substrate.h>
 #import <SpringBoard/SpringBoard.h>
 #import <AudioToolbox/AudioToolbox.h>

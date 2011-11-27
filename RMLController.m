@@ -1,10 +1,3 @@
-//
-//  RMLController.m
-//
-//  Created by Alex Varju on 2010-11-14.
-//  Copyright 2010 Alex Varju. All rights reserved.
-//
-
 #import "RMLController.h"
 #import "RMLAlertView.h"
 #include "RMLDebug.h"

@@ -1,10 +1,3 @@
-//
-//  RMLController.h
-//
-//  Created by Alex Varju on 2010-11-14.
-//  Copyright 2010 Alex Varju. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 #import "RMLSnoozer.h"

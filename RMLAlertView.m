@@ -1,10 +1,3 @@
-//
-//  RMLAlertView.m
-//
-//  Created by Alex Varju on 2010-10-23.
-//  Copyright 2010 Alex Varju. All rights reserved.
-//
-
 #import "RMLAlertView.h"
 #import "RMLFrameworkHeaders.h"
 #include "RMLDebug.h"

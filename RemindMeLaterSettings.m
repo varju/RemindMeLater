@@ -1,10 +1,3 @@
-//
-//  RemindMeLaterSettings.m
-//
-//  Created by Alex Varju on 2011-01-16.
-//  Copyright 2011 Alex Varju. All rights reserved.
-//
-
 #import "RemindMeLaterSettings.h"
 #include "RMLDebug.h"
 

@@ -1,10 +1,3 @@
-//
-//  RMLAlertView.h
-//
-//  Created by Alex Varju on 2010-10-23.
-//  Copyright 2010 Alex Varju. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 

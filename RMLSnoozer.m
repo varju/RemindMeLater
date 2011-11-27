@@ -1,10 +1,3 @@
-//
-//  RMLSnoozer.m
-//
-//  Created by Alex Varju on 2010-10-24.
-//  Copyright 2010 Alex Varju. All rights reserved.
-//
-
 #import "RMLSnoozer.h"
 #include "RMLDebug.h"
 
