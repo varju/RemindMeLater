@@ -36,8 +36,6 @@
 
 #else
 #import "UIKit/UIAlertView.h"
-#import "UIKit/UIModalView.h"
-#import "UIKit/UIModalViewDelegate.h"
 #endif
 
 @interface UIView (privatein31)

@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 
 #import "RMLSnoozer.h"
+#import <UIKit/UIKit.h>
 
 @protocol RMLJailbreakFacade <NSObject>
 -(void)showAlert:(id)alert;
